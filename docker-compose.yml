@@ -1,0 +1,24 @@
+version: '3'
+services:
+  apache2:
+    build: 'apache2'
+#    ports:
+#     - "80:80"
+
+
+  mysql:
+    build: 'mysql'
+    restart: always
+
+    environment:
+      MYSQL_ROOT_PASSWORD: qwerty
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+    ports:
+     - "3306:3306"
+  haproxy:
+    build: 'haproxy'
+    ports:
+     - "8080:8080"

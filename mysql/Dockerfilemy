@@ -1,0 +1,24 @@
+FROM ubuntu:14.04
+RUN apt-get update -y
+RUN apt-get upgrade -y
+
+
+RUN apt-get install sudo
+RUN apt-get install openssh-server passwd -y
+
+ADD ./start.sh /start.sh
+ADD ./mysql.sh /mysql.sh
+
+RUN mkdir /var/run/sshd
+
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' -y
+RUN sed -i 's/PermitRootLogin without-password/\#PermitRootLogin without-password/' /etc/ssh/sshd_config
+RUN chmod 755 /start.sh
+RUN chmod 755 /mysql.sh
+EXPOSE 22
+EXPOSE 3306
+RUN ./start.sh
+RUN ./mysql.sh
+#ENTRYPOINT ["/usr/sbin/sshd", "-D"]
+ENTRYPOINT ["/etc/init.d/mysql", "start", "FOREGROUND"]
+RUN usermod -aG sudo sergey
