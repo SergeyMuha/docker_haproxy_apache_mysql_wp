@@ -25,7 +25,7 @@ ADD wp /usr/local/bin/wp
 
 ADD apache-config.conf /etc/apache2/sites-enabled/000-default.conf
 RUN /usr/local/bin/wp core download --allow-root --path=/var/www/wordpress
-RUN /usr/local/bin/wp config create --dbhost=ubuntu_mysql_1 --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --allow-root --path=/var/www/wordpress --skip-check
+RUN /usr/local/bin/wp config create --dbhost=docker_haproxy_apache_mysql_wp_mysql_1 --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --allow-root --path=/var/www/wordpress --skip-check
 
 
 
